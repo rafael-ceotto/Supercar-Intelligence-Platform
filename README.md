@@ -17,6 +17,60 @@ The goal is not dashboards, but a **clean, scalable, and testable architecture**
 
 ---
 
+## ⚡ Quickstart (MVP)
+
+Siga estes passos para rodar um scaffold mínimo com um endpoint `/ask` mock:
+
+1. Crie e ative um ambiente virtual:
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate    # Windows
+source .venv/bin/activate  # macOS / Linux
+```
+
+2. Instale dependências e rode o servidor de desenvolvimento:
+
+```bash
+pip install -r requirements.txt
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+3. Teste o endpoint `/ask` (exemplo com `curl`):
+
+```bash
+curl -X POST "http://127.0.0.1:8000/ask" -H "Content-Type: application/json" -d '{"question":"Qual a velocidade máxima de um McLaren P1?"}'
+```
+
+O endpoint retornará uma resposta mock; substitua pela lógica RAG/LLM conforme o desenvolvimento.
+
+---
+
+## 🔧 Variáveis de ambiente
+
+O scaffold mínimo não exige variáveis de ambiente para rodar em modo mock. Quando integrar LLMs/serviços externos, adicione no `.env` (ou no ambiente):
+
+- `OPENAI_API_KEY` — chave da OpenAI (opcional)
+- `FAISS_INDEX_PATH` — caminho para o índice FAISS local (opcional)
+- `DATABASE_URL` — string de conexão caso persista dados
+
+Use `python-dotenv` ou `python -m venv` para gerenciar variáveis em desenvolvimento.
+
+---
+
+## ✅ Testes
+
+Um teste simples com `pytest` é fornecido em `tests/test_main.py`. Ele chama a função `ask` diretamente (mock) e valida a estrutura de resposta.
+
+Para rodar os testes localmente:
+
+```bash
+pip install -r requirements.txt
+pytest -q
+```
+
+
+
 ## 🗂️ Data Layers (Lakehouse)
 
 | Layer | Description |
